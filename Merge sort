@@ -1,0 +1,75 @@
+#include <iostream>
+
+using namespace std;
+
+void Merge(int *a, int low, int high, int mid)
+{
+	int n, m, o, temp[high-low+1];
+	n = low;
+	o = 0;
+	m = mid + 1;
+	while (n <= mid && m <= high)
+	{
+		if (a[n] < a[m])
+		{
+			temp[o] = a[n];
+			o++;
+			n++;
+		}
+		else
+		{
+			temp[o] = a[m];
+			o++;
+			m++;
+		}
+	}
+	while (n <= mid)
+	{
+		temp[o] = a[n];
+		o++;
+		n++;
+	}
+	while (m <= high)
+	{
+		temp[o] = a[m];
+		o++;
+		m++;
+	}
+	for (n = low; n <= high; n++)
+	{
+		a[n] = temp[n-low];
+	}
+}
+void MergeSort(int *a, int low, int high)
+{
+	int mid;
+	if (low < high)
+	{
+		mid=(low+high)/2;
+		MergeSort(a, low, mid);
+		MergeSort(a, mid+1, high);
+		Merge(a, low, high, mid);
+	}
+}
+
+int main()
+{
+	int s, i;
+	cout<<"\nEnter the number of data elements for sorting: ";
+	cin>>s;
+
+	int arr[s];
+	for(i = 0; i < s; i++)
+	{
+		cout<<"Enter element "<<i+1<<": ";
+		cin>>arr[i];
+	}
+
+	MergeSort(arr, 0, s-1);
+
+	cout<<"\nSorted Data is: ";
+	for (i = 0; i < s; i++)
+        cout<<" >>> "<<arr[i];
+
+	return 0;
+}
